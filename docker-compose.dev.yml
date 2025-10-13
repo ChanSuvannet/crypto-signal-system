@@ -1,0 +1,163 @@
+# ============================================
+# DEVELOPMENT ENVIRONMENT OVERRIDE
+# Use: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+# ============================================
+
+version: '3.8'
+
+services:
+  
+  # ==================== BACKEND ====================
+  
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile.dev
+      target: development
+    environment:
+      NODE_ENV: development
+      DEBUG: "nestjs:*"
+    volumes:
+      - ./backend/api-gateway/src:/app/src
+      - ./backend/api-gateway/package.json:/app/package.json
+      - /app/node_modules
+    command: npm run start:dev
+    ports:
+      - "9229:9229"  # Node.js debugger
+
+  # ==================== PYTHON BOTS ====================
+  
+  market-data-bot:
+    build:
+      dockerfile: Dockerfile.dev
+    environment:
+      PYTHON_ENV: development
+      LOG_LEVEL: debug
+    volumes:
+      - ./backend/bots/market-data-bot/src:/app/src
+      - ./backend/bots/shared:/app/shared
+    command: python -m debugpy --listen 0.0.0.0:5678 src/main.py
+
+  news-collector-bot:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/bots/news-collector-bot/src:/app/src
+      - ./backend/bots/shared:/app/shared
+    command: python -m debugpy --listen 0.0.0.0:5679 src/main.py
+
+  technical-analysis-bot:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/bots/technical-analysis-bot/src:/app/src
+      - ./backend/bots/shared:/app/shared
+    command: python -m debugpy --listen 0.0.0.0:5680 src/main.py
+
+  sentiment-analysis-bot:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/bots/sentiment-analysis-bot/src:/app/src
+      - ./backend/bots/shared:/app/shared
+    command: python -m debugpy --listen 0.0.0.0:5681 src/main.py
+
+  itc-analysis-bot:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/bots/itc-analysis-bot/src:/app/src
+      - ./backend/bots/shared:/app/shared
+    command: python -m debugpy --listen 0.0.0.0:5682 src/main.py
+
+  signal-aggregator-bot:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/bots/signal-aggregator-bot/src:/app/src
+      - ./backend/bots/shared:/app/shared
+    command: python -m debugpy --listen 0.0.0.0:5683 src/main.py
+
+  ml-learning-engine:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/bots/ml-learning-engine/src:/app/src
+      - ./backend/bots/ml-learning-engine/notebooks:/app/notebooks
+      - ./backend/bots/shared:/app/shared
+    ports:
+      - "8888:8888"  # Jupyter notebook
+    command: >
+      sh -c "jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root &
+             python -m debugpy --listen 0.0.0.0:5684 src/main.py"
+
+  notification-bot:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/bots/notification-bot/src:/app/src
+      - ./backend/bots/shared:/app/shared
+    command: python -m debugpy --listen 0.0.0.0:5685 src/main.py
+
+  feedback-processor-bot:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/bots/feedback-processor-bot/src:/app/src
+      - ./backend/bots/shared:/app/shared
+    command: python -m debugpy --listen 0.0.0.0:5686 src/main.py
+
+  # ==================== FRONTEND ====================
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+      target: development
+    environment:
+      VITE_API_URL: http://localhost:3000
+      VITE_WS_URL: ws://localhost:3000
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/package.json:/app/package.json
+      - /app/node_modules
+    command: npm run dev
+    ports:
+      - "5173:5173"  # Vite dev server with HMR
+
+  # ==================== DEVELOPMENT TOOLS ====================
+
+  # Mailhog - Email Testing
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: crypto-mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - crypto-network
+
+  # Adminer - Database Management
+  adminer:
+    image: adminer:latest
+    container_name: crypto-adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+      ADMINER_DESIGN: pepa-linha
+    networks:
+      - crypto-network
+
+  # Redis Commander - Redis Management
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: crypto-redis-commander
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    ports:
+      - "8081:8081"
+    networks:
+      - crypto-network
