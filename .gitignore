@@ -1,0 +1,322 @@
+# Git ignore
+# ============================================
+# CRYPTO TRADING SIGNAL SYSTEM - .gitignore
+# ============================================
+
+# ================== GENERAL ==================
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ================== SECRETS ==================
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+secrets/
+credentials/
+api_keys.txt
+*-secrets.yaml
+vault.key
+
+# ================== PYTHON ==================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# pyenv
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# ML Models (large files)
+*.h5
+*.pkl
+*.joblib
+*.model
+*.weights
+models/saved_models/*.pb
+models/checkpoints/
+
+# Training data (too large for git)
+data/raw/
+data/processed/
+data/training/
+*.csv
+*.parquet
+*.feather
+
+# ================== NODE.JS ==================
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Build outputs
+dist/
+dist-ssr/
+*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Next.js (if used)
+.next/
+out/
+
+# Nuxt.js (if used)
+.nuxt/
+
+# ================== DATABASES ==================
+# MySQL
+*.sql
+*.sql.gz
+mysql_data/
+*.ibd
+*.frm
+
+# TimescaleDB / PostgreSQL
+postgres_data/
+*.dump
+
+# Redis
+dump.rdb
+appendonly.aof
+redis_data/
+
+# MongoDB
+mongo_data/
+*.bson
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# ================== DOCKER ==================
+# Ignore data volumes
+volumes/
+docker-volumes/
+*_data/
+
+# Docker Compose override (for local dev)
+docker-compose.override.yml
+
+# ================== LOGS ==================
+logs/
+*.log
+*.log.*
+log/
+log_*.txt
+
+# System logs
+syslog
+kern.log
+auth.log
+
+# Application logs
+app.log
+error.log
+access.log
+debug.log
+
+# Bot logs
+bots/*/logs/
+**/logs/*.log
+
+# ================== CONFIG ==================
+# Local configurations
+config/local.yaml
+config/development.local.yaml
+config/production.local.yaml
+*local.config.js
+
+# ================== TESTING ==================
+# Test results
+test-results/
+junit.xml
+*.spec.js.snap
+
+# Coverage
+coverage/
+.nyc_output/
+
+# ================== FRONTEND ==================
+# Build artifacts
+.vite/
+.nuxt/
+.cache/
+public/build/
+
+# Generated files
+.turbo/
+tsconfig.tsbuildinfo
+
+# ================== INFRASTRUCTURE ==================
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Kubernetes secrets
+*-secrets.yaml
+secret.yaml
+
+# SSL Certificates (don't commit private keys!)
+*.crt
+*.key
+!*.example.crt
+!*.example.key
+ssl/private/
+
+# ================== BACKUP ==================
+# Backup files
+backup/
+backups/
+*.backup
+*.bak
+*.old
+
+# ================== MONITORING ==================
+# Prometheus data
+prometheus_data/
+
+# Grafana data
+grafana_data/
+grafana/data/
+
+# ================== TEMP FILES ==================
+tmp/
+temp/
+.tmp/
+.temp/
+
+# ================== OS SPECIFIC ==================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ================== IDE SPECIFIC ==================
+# PyCharm
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# ================== MISC ==================
+# Collected static files (if any)
+staticfiles/
+static_root/
+
+# Media files (user uploads, if any)
+media/
+uploads/
+
+# Cache
+.cache/
+__pycache__/
+*.pyc
+
+# Documentation builds
+docs/_build/
+docs/.doctrees/
+site/
+
+# ================== IGNORE BUT KEEP DIRECTORIES ==================
+# Keep directory structure but ignore contents
+!.gitkeep
