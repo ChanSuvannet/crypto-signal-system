@@ -1,11 +1,8 @@
-
 # ============================================
 # Crypto Trading Signal System
 # backed/bots/shared/core/base_bot.py
 # Deception: Foundation class for all trading bots with common functionality.
 # ============================================
-
-
 import asyncio
 import contextlib
 import signal
@@ -252,7 +249,7 @@ class BaseBot(ABC):
 
     async def _update_heartbeat(self):
         """Update bot heartbeat timestamp."""
-        self._last_heartbeat = datetime.utcnow()
+        self._last_heartbeat = datetime.now(timezone.utc)
 
         # Update in database if available
         if self.db:
