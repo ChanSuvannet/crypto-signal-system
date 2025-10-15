@@ -36,15 +36,17 @@ services:
   # MySQL - Primary Database
   mysql:
     image: mysql:8.0
-    container_name: crypto-mysql
+    container_name: mysql
     restart: unless-stopped
+    env_file:
+      - ./secrets/database.txt
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-your_secure_password}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-crypto_trading_bot}
-      MYSQL_USER: ${MYSQL_USER:-crypto_user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-crypto_password}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "7100:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/schemas/complete_schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
@@ -63,10 +65,12 @@ services:
     image: timescale/timescaledb:latest-pg14
     container_name: crypto-timescaledb
     restart: unless-stopped
+    env_file:
+      - ./secrets/database.txt
     environment:
-      POSTGRES_DB: ${TIMESCALE_DB:-crypto_timeseries}
-      POSTGRES_USER: ${TIMESCALE_USER:-timescale_user}
-      POSTGRES_PASSWORD: ${TIMESCALE_PASSWORD:-timescale_password}
+      POSTGRES_DB: ${TIMESCALE_DB}
+      POSTGRES_USER: ${TIMESCALE_USER}
+      POSTGRES_PASSWORD: ${TIMESCALE_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
