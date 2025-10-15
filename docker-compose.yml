@@ -36,7 +36,7 @@ services:
   # MySQL - Primary Database
   mysql:
     image: mysql:8.0
-    container_name: crypto-mysql
+    container_name: mysql
     restart: unless-stopped
     env_file:
       - ./secrets/database.txt
