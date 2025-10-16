@@ -273,5 +273,29 @@ Published:  {DataFormatter.format_timestamp(article_data.get('published_at'))}
             logger.error(f"News formatting failed: {e}")
             return "News formatting error"
     
-    # @staticmethod
-    # def format_performance_summary(metrics: dict) ->
+    @staticmethod
+    def format_performance_summary(metrics: dict) -> str:
+        """
+        Args:
+            metrics: Performance metrics dictionary
+            
+        Returns:
+            Formatted summary string
+        """
+        try:
+            return f"""
+📊 PERFORMANCE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total Trades:     {metrics.get('total_trades', 0)}
+Win Rate:         {DataFormatter.format_percentage(metrics.get('win_rate', 0))}
+Profit Factor:    {metrics.get('profit_factor', 0):.2f}
+Total P/L:        {DataFormatter.format_price(metrics.get('total_pnl', 0))}
+Avg Win:          {DataFormatter.format_price(metrics.get('avg_win', 0))}
+Avg Loss:         {DataFormatter.format_price(metrics.get('avg_loss', 0))}
+Max Drawdown:     {DataFormatter.format_percentage(metrics.get('max_drawdown', 0))}
+Sharpe Ratio:     {metrics.get('sharpe_ratio', 0):.2f}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+""".strip()
+        except Exception as e:
+            logger.error(f"Performance summary formatting failed: {e}")
+            return "Performance summary formatting error"
