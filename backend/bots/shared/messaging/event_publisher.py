@@ -1,6 +1,6 @@
 # ============================================
 # Crypto Trading Signal System
-# backed/bots/shared/database/event_publisher.py
+# backed/bots/shared/messaging/event_publisher.py
 # Deception: High-level interface for publishing events.
 # ============================================
 

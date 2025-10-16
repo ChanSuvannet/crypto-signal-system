@@ -1,7 +1,7 @@
 
 # ============================================
 # Crypto Trading Signal System
-# backed/bots/shared/database/rabbitmq_client.py
+# backed/bots/shared/messaging/rabbitmq_client.py
 # Deception: Async RabbitMQ client for message publishing and consuming.
 # ============================================
 

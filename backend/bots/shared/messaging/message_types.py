@@ -1,6 +1,6 @@
 # ============================================
 # Crypto Trading Signal System
-# backed/bots/shared/database/message_types.py
+# backed/bots/shared/messaging/message_types.py
 # Deception: Message schemas and types for inter-bot communication.
 # ============================================
 
