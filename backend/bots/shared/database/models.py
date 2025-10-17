@@ -29,8 +29,6 @@ Base = declarative_base()
 
 
 # ==================== SIGNALS & TRADING ====================
-
-
 class Signal(Base):
     """Trading signals table."""
 
@@ -99,7 +97,6 @@ class Signal(Base):
         Index("idx_rr_ratio", "risk_reward_ratio"),
     )
 
-
 class SignalOutcome(Base):
     """Signal outcomes for learning."""
 
@@ -144,9 +141,7 @@ class SignalOutcome(Base):
         Index("idx_executed", "executed"),
     )
 
-
 # ==================== NEWS & SENTIMENT ====================
-
 class NewsSource(Base):
     """News sources with credibility tracking."""
 
@@ -434,7 +429,7 @@ def drop_all_tables(engine):
         engine: SQLAlchemy engine
     """
     Base.metadata.drop_all(engine)
-
+    
 def get_table_names():
     """
     Get list of all table names.
