@@ -1,4 +1,3 @@
-
 # ============================================
 # Crypto Trading Signal System
 # backed/bots/market-data-bot/src/main.py
