@@ -1,4 +1,9 @@
 
+# ============================================
+# Crypto Trading Signal System
+# backed/bots/shared/requirements.txt
+# Deception: requirements 
+# ============================================
 # Database Clients
 aiomysql==0.2.0
 asyncpg==0.29.0
