@@ -12,7 +12,8 @@ import ccxt.async_support as ccxt
 
 from backend.shared_libs.python.crypto_trading_shared.enums import \
     TimeFrameEnum
-from backend.shared_libs.python.crypto_trading_shared.types import OHLCVData
+from backend.shared_libs.python.crypto_trading_shared.types import (
+    OHLCVData, OrderBookData)
 
 
 class CoinbaseConnector:

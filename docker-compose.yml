@@ -208,30 +208,68 @@ services:
 
   # ==================== PYTHON BOTS ====================
   # Market Data Collector Bot
+  # ==================== PYTHON BOTS ====================
+  # Market Data Collector Bot - FIXED VERSION
   market-data-bot:
     build:
-      context: .
+      context: .  # Build from root directory
       dockerfile: backend/bots/market-data-bot/Dockerfile
     container_name: crypto-market-data-bot
     restart: unless-stopped
     env_file:
       - secrets/api-keys.txt
     environment:
+      # Database connections
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-crypto_trading}
+      MYSQL_USER: ${MYSQL_USER:-crypto_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      
+      # TimescaleDB
+      TIMESCALEDB_HOST: timescaledb
+      TIMESCALEDB_PORT: 5432
+      TIMESCALEDB_DATABASE: ${TIMESCALE_DB:-crypto_timeseries}
+      TIMESCALEDB_USER: ${TIMESCALE_USER:-timescale_user}
+      TIMESCALEDB_PASSWORD: ${TIMESCALE_PASSWORD}
+      
+      # Redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      
+      # RabbitMQ
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-guest}
+      
+      # Exchange API Keys
+      BINANCE_API_KEY: ${BINANCE_API_KEY:-}
+      BINANCE_API_SECRET: ${BINANCE_API_SECRET:-}
+      
       # Bot Config
-      COLLECTION_INTERVAL: ${DATA_COLLECTION_INTERVAL}
-      SYMBOLS: ${CRYPTO_SYMBOLS}
+      CONFIG_PATH: /app/config.yaml
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      
     depends_on:
-      mysql:
-        condition: service_healthy
       timescaledb:
+        condition: service_healthy
+      redis:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
     networks:
       - crypto-network
     volumes:
-      - ./backend/bots/market-data-bot/logs:/app/logs
-
+      - ./backend/bots/market-data-bot/logs:/var/log/market-data-bot
+      - ./backend/bots/market-data-bot/config.yaml:/app/config.yaml
+    healthcheck:
+      test: ["CMD", "python", "-c", "import redis; r=redis.Redis(host='redis', port=6379); r.ping()"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
   # News Collector Bot
   news-collector-bot:
     build:
