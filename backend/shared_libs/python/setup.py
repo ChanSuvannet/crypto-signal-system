@@ -3,10 +3,20 @@ Shared Libraries Package Setup
 Install this package in all bot environments for shared code access
 """
 
-from setuptools import setup, find_packages
+import os
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+from setuptools import find_packages, setup
+
+# Handle missing README gracefully
+readme_content = ""
+if os.path.exists("README.md"):
+    try:
+        with open("README.md", "r", encoding="utf-8") as fh:
+            readme_content = fh.read()
+    except Exception:
+        readme_content = "Crypto Trading Shared Libraries"
+else:
+    readme_content = "Shared libraries for crypto trading bot system"
 
 setup(
     name="crypto-trading-shared",
@@ -14,10 +24,11 @@ setup(
     author="Crypto Trading System",
     author_email="dev@cryptotrading.com",
     description="Shared libraries for crypto trading bot system",
-    long_description=long_description,
+    long_description=readme_content,
     long_description_content_type="text/markdown",
     url="https://github.com/yourusername/crypto-signal-system",
     packages=find_packages(),
+    package_dir={'': '.'},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -31,7 +42,7 @@ setup(
     python_requires=">=3.9",
     install_requires=[
         # Core dependencies
-        "pydantic>=2.0.0",
+        "pydantic>=2.0",
         "python-dotenv>=1.0.0",
         # Database
         "sqlalchemy>=2.0.0",
@@ -61,4 +72,5 @@ setup(
             # Add CLI commands if needed
         ],
     },
+    zip_safe=False,
 )

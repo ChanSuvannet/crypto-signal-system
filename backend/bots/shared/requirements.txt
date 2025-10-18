@@ -1,4 +1,9 @@
 
+# ============================================
+# Crypto Trading Signal System
+# backed/bots/shared/requirements.txt
+# Deception: requirements 
+# ============================================
 # Database Clients
 aiomysql==0.2.0
 asyncpg==0.29.0
@@ -24,7 +29,7 @@ aiormq==6.7.7
 # Technical Analysis
 pandas==2.1.4
 numpy==1.26.2
-ta-lib==0.4.28
+# ta-lib==0.4.28
 
 # Additional utilities
 python-dateutil==2.8.2

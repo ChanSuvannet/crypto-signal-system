@@ -19,8 +19,8 @@ from processors.orderbook_processor import OrderBookProcessor
 from processors.trade_processor import TradeProcessor
 from storage.timescale_writer import TimescaleWriter
 
-from backend.shared_libs.python.crypto_trading_shared.enums import (
-    OHLCVData, OrderBookData, PriceData, TimeFrame, TimeFrameEnum)
+from backend.shared_libs.python.crypto_trading_shared.types import (
+    OHLCVData, OrderBookData)
 
 
 class MarketDataCollector:
@@ -458,6 +458,7 @@ class MarketDataCollector:
         }
 
     async def stop(self):
+        
         """Stop collector and cleanup"""
         try:
             self.logger.info("Stopping collector...")
@@ -486,3 +487,5 @@ class MarketDataCollector:
 
         except Exception as e:
             self.logger.error(f"Stop error: {e}", exc_info=True)
+# Global instance
+market_data_Collector = MarketDataCollector()

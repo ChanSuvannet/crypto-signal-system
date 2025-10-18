@@ -7,14 +7,14 @@ import asyncio
 import contextlib
 import signal
 import sys
+import traceback
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
-from typing import Optional, Dict, Any
-import traceback
+from typing import Any, Dict, Optional
 
 from .config import Config
+from .exceptions import BotConfigError, BotConnectionError, BotError
 from .logger import setup_logger
-from .exceptions import BotError, BotConfigError, BotConnectionError
 
 
 class BaseBot(ABC):
